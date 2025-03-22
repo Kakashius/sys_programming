@@ -13,7 +13,7 @@
 						  /* п р е д е л ь н ы е    */
 						  /* размеры:               */
 #define MAXNISXTXT 50                             /* - исходного текста;    */
-#define NSINT     201                             /* - табл.синтакс.правил; */
+#define NSINT     246                            /* - табл.синтакс.правил; */
 #define NCEL       20                             /* - стека целей;         */
 #define NDST      500                             /* - стека достижений;    */
 #define NVXOD      53                             /* - табл.входов;         */
@@ -24,6 +24,14 @@
 						  /* терпретируемого  фраг- */
 						  /* мента исх.текста;      */
 #define NSYM      100                             /* - таблицы имен и меток */
+
+#define CR_TRUE  "@T"
+#define CR_FALSE "@F"
+#define CR_5 "@5"
+#define CR_L1    "@ON_T"
+#define CR_L0    "@ON_F"
+#define DEC_MEM  "@B"
+#define DEC_REG  "@RTMP"
 
 /*
 ***** Б а з а  данных компилятора
@@ -209,7 +217,7 @@ struct
  {/*.   56     .*/    57 ,    55 , "X  " ,    0 },
  {/*.   57     .*/    58 ,    56 , "E  " ,    0 },
  {/*.   58     .*/    59 ,    57 , "D  " ,    0 },
- {/*.   59     .*/    60 ,    58 , "(  " ,    0 },
+ {/*.   59     .*/    60 ,    58 , "(  " ,  221 },
  {/*.   60     .*/    61 ,    59 , "RZR" ,    0 },
  {/*.   61     .*/    62 ,    60 , ")  " ,    0 },
  {/*.   62     .*/    63 ,    61 , ";  " ,   65 },
@@ -342,9 +350,10 @@ struct
  {/*.  166     .*/   167 ,   165 , "LIT" ,  168 },
  {/*.  167     .*/   197 ,   166 , "AVI" ,    0 },
 
- {/*.  168     .*/   169 ,   165 , "IPE" ,    0 },
+ {/*.  168     .*/   169 ,   165 , "IPE" ,  238 },
  {/*.  169     .*/   170 ,   168 , "AVI" ,    0 },
  {/*.  170     .*/     0 ,   169 , "*  " ,    0 },
+
   /*                                               вход с символа - OPR    */
  {/*.  171     .*/   172 ,     0 , "OPR" ,    0 },
  {/*.  172     .*/   173 ,   171 , "TEL" ,    0 },
@@ -368,7 +377,7 @@ struct
  {/*.  186     .*/     0 ,    73 , "*  " ,    0 },
 
 
- {/*.  187     .*/   188 ,    49 , "C  " ,    0 },
+ {/*.  187     .*/   188 ,    49 , "C  " ,  201 },
  {/*.  188     .*/   189 ,   187 , "H  " ,    0 },
  {/*.  189     .*/   190 ,   188 , "A  " ,    0 },
  {/*.  190     .*/   191 ,   189 , "R  " ,    0 },
@@ -383,7 +392,64 @@ struct
 
  {/*.  198     .*/   199 ,     0 , "*  " ,    0 },
  {/*.  199     .*/   200 ,   198 , "ZNK" ,    0 },
- {/*.  200     .*/     0 ,   199 , "*  " ,    0 }
+ {/*.  200     .*/     0 ,   199 , "*  " ,    0 },
+
+ /* for DEC - FIXED - INIT */
+
+ {/*.  201     .*/   202 ,    49 , "D  " ,    0 },
+ {/*.  202     .*/   203 ,   201 , "E  " ,    0 },
+ {/*.  203     .*/   204 ,   202 , "C  " ,    0 },
+ {/*.  204     .*/   205 ,   203 , "   " ,    0 },
+ {/*.  205     .*/   206 ,   204 , "F  " ,    0 },
+ {/*.  206     .*/   207 ,   205 , "I  " ,    0 },
+ {/*.  207     .*/   208 ,   206 , "X  " ,    0 },
+ {/*.  208     .*/   209 ,   207 , "E  " ,    0 },
+ {/*.  209     .*/   210 ,   208 , "D  " ,    0 },
+ {/*.  210     .*/   211 ,   209 , "   " ,    0 },
+ {/*.  211     .*/   212 ,   210 , "I  " ,    0 },
+ {/*.  212     .*/   213 ,   211 , "N  " ,    0 },
+ {/*.  213     .*/   214 ,   212 , "I  " ,    0 },
+ {/*.  214     .*/   215 ,   213 , "T  " ,    0 },
+ {/*.  215     .*/   216 ,   214 , "(  " ,    0 },
+ {/*.  216     .*/   217 ,   215 , "RZR" ,    0 },
+ {/*.  217     .*/   218 ,   216 , ")  " ,    0 },
+ {/*.  218     .*/   219 ,   217 , ";  " ,    0 },
+ {/*.  219     .*/   220 ,   218 , "ODC" ,    0 },
+ {/*.  220     .*/     0 ,   219 , "*  " ,    0 },
+
+ /* for BIN FIXED */
+
+ {/*.  221     .*/   222 ,    58 , ";  " ,  224 },
+ {/*.  222     .*/   223 ,   221 , "ODC" ,    0 },
+ {/*.  223     .*/     0 ,   222 , "*  " ,    0 },
+  
+ /* for BIN FIXED INIT */
+
+ {/*.  224     .*/   225 ,    58 , "   " ,    0 },
+ {/*.  225     .*/   226 ,   224 , "I  " ,    0 },
+ {/*.  226     .*/   227 ,   225 , "N  " ,    0 },
+ {/*.  227     .*/   228 ,   226 , "I  " ,    0 },
+ {/*.  228     .*/   229 ,   227 , "T  " ,    0 },
+ {/*.  229     .*/   230 ,   228 , "(  " ,    0 },
+ {/*.  230     .*/   231 ,   229 , "RZR" ,    0 },
+ {/*.  231     .*/   232 ,   230 , ")  " ,    0 },
+ {/*.  232     .*/   233 ,   231 , ";  " ,    0 },
+ {/*.  233     .*/   234 ,   232 , "ODC" ,    0 },
+ {/*.  234     .*/     0 ,   233 , "*  " ,    0 },
+
+ /* for equal */
+
+ {/*.  235     .*/   236 ,     0 , "=  " ,    0 },
+ {/*.  236     .*/   237 ,   235 , "ZNK" ,    0 },
+ {/*.  237     .*/     0 ,   236 , "*  " ,    0 },	
+
+ {/*.  238     .*/   239 ,   235 , "CIF" ,  241 },
+ {/*.  239     .*/   240 ,   238 , "AVI" ,    0 },
+ {/*.  240     .*/     0 ,   239 , "*  " ,    0 },
+
+ {/*.  241     .*/   242 ,   241 , "AVI" ,    0 },
+ {/*.  242     .*/   243 ,   242 , "AVI" ,    0 },
+ {/*.  243     .*/   244 ,     0 , "*  " ,    0 }
 };
 
 /*
@@ -452,7 +518,7 @@ struct
   {/*.  47     .*/   ";  " ,   0 , 'T' },
   {/*.  48     .*/   "L  " ,   0 , 'T' },
   {/*.  49     .*/   "F  " ,   0 , 'T' },
-  {/*.  50     .*/   "=  " ,   0 , 'T' },
+  {/*.  50     .*/   "=  " , 235 , 'T' },
   {/*.  51     .*/   "H  " ,   0 , 'T' },
   {/*.  52     .*/   "*  " , 198 , 'T' }
 };
@@ -529,7 +595,7 @@ char TPR [ NVXOD ] [ NNETRM ] =
   |       AVI:BUK:CIF:IDE:IPE:IPR:LIT:MAN:ODC:OEN;OPA:OPR:PR0:RZR:TEL:ZNK|
   |__________:___:___:___:___:___:___:___:___:___:___:___:___:___:___:___| */
   {/*  F*/ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0  },
-  {/*  =*/ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0  },
+  {/*  =*/ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1  },
   {/*  H*/ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0  },
   {/*  **/ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1  }
 /*|_______________________________________________________________________| */
@@ -540,7 +606,7 @@ char TPR [ NVXOD ] [ NNETRM ] =
 ****** Н А Ч А Л О  обработки исходного текста
 */
 
-/*..........................................................................*/
+/*.США.........................................................................*/
 
 void compress_ISXTXT()                            /* Программа уплотнения   */
 						  /* исходного текста путем */
@@ -845,15 +911,8 @@ long int VALUE ( char* s )                        /* п р о г р а м м а      */
 						  /* ставление типа long int*/
   i = 0;
   S = 0;
-  while ( *(s + i) != 'B' )
-
-   {
-
-    S <<= 1;
-    if ( *(s + i) == '1' )
-     S++;
-    i++;
-   }
+  printf ("value - %s\n", s);
+  sscanf (s, "%ld", &S);
 
   return (S);
  }
@@ -1032,10 +1091,14 @@ int ODC1 ()
    }
 
   strcpy ( SYM [ISYM].NAME, FORMT [1] );          /* при отсутствии повтор- */
-  strcpy ( SYM [ISYM].RAZR, FORMT [4] );          /* ного объявления иденти-*/
+                                                  /* ного объявления иденти-*/
 						  /* фикатора запоминаем его*/
 						  /* вместе с разрядностью в*/
 						  /* табл.SYM               */
+ strcpy ( SYM [ISYM].RAZR, FORMT [4] ); // RAZR  /* ного объявления иденти-*/
+              /* фикатора запоминаем его*/
+              /* вместе с разрядностью в*/
+              /* табл.SYM               */
 
   if ( !strcmp ( FORMT [2], "BIN" ) &&            /* если идентификатор оп- */
 		  !strcmp ( FORMT [3], "FIXED" ) )/* ределен как bin fixed, */
@@ -1045,22 +1108,51 @@ int ODC1 ()
     goto ODC11;                                   /* идем на продолжение об-*/
 						  /* работки, а             */
    }
+   else if ( !strcmp ( FORMT [2], "DEC" ) &&       /* если идентификатор оп- */
+      !strcmp ( FORMT [3], "FIXED" ) )/* ределен как dec fixed, */
+   {
+    SYM [ISYM].TYPE = 'D';                        /* то устанавливаем тип   */
+              /* идентификатора = 'D' и */
+    goto ODC11;                                   /* идем на продолжение об-*/
+              /* работки, а             */
+   }
   else                                            /* иначе                  */
    {
     SYM [ISYM].TYPE = 'U';                        /* устанавливаем тип иден-*/
-						  /* тификатора = 'U'  и    */
+    						  /* тификатора = 'U'  и    */
     return 2;                                     /* завершаем программу    */
 						  /* по ошибке              */
    }
 
-ODC11:                                            /* если идентификатор     */
-						  /* имеет начальную иници- */
-  if ( !strcmp ( FORMT [5], "INIT" )  )           /* ализацию, то запомина- */
-   strcpy ( SYM [ISYM++].INIT, FORMT [6] );       /* ем в табл. SYM это на- */
-						  /* чальное значение, а    */
-  else                                            /* иначе                  */
-   strcpy ( SYM [ISYM++].INIT, "0B" );            /* инициализируем иденти- */
-						  /* фикатор нулем          */
+ODC11:  
+     printf(FORMT [4]);
+     if (0 == strlen(FORMT [4]) || !strcmp (FORMT[4], "INIT"))
+     {
+       //set the default dimentional
+       if (SYM [ISYM].TYPE == 'B')
+       {
+       	strcpy (SYM [ISYM].RAZR, "15");
+       }
+       else
+       {
+      	strcpy (SYM [ISYM].RAZR, "3");	
+       }
+     } 
+     else
+     {
+     	strcpy ( SYM [ISYM].RAZR, FORMT [4] );
+     }  
+    
+     if ( !strcmp ( FORMT [5], "INIT" )  )           /* ализацию, то запомина- */
+   strcpy ( SYM [ISYM++].INIT, FORMT [6] );       /* ем в табл. SYM это на- */      /* чальное значение, а    */
+  else if (!strcmp (FORMT [4], "INIT")) 
+   strcpy ( SYM [ISYM++].INIT, FORMT [5] );
+  else                                           /* иначе                  */
+   strcpy ( SYM [ISYM++].INIT, "0" );            /* инициализируем иденти- */
+              /* фикатор нулем          */  
+  
+   
+                  				  /* фикатор нулем          */
 
    return 0;                                      /* успешное завешение     */
 						  /* программы              */
@@ -1202,7 +1294,8 @@ int AVI2 ()
   if ( IFORMT == 1 )                              /* если правая часть одно-*/
      {                                            /* термовая, то:          */
     for ( i = 0; i < ISYM; i++ )                  /* ищем этот терм в табли-*/
-     {                                            /* це имен  и             */
+     {             
+                                /* це имен  и             */
       if ( !strcmp ( SYM [i].NAME, FORMT [0] )  &&/* если находим, то:      */
 	   strlen ( SYM [i].NAME ) ==
 			      strlen ( FORMT [0] )
@@ -1221,7 +1314,7 @@ int AVI2 ()
 						  /* ровской операции L     */
 
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /*       формируем        */
-					"RRAB," );/*       первый  и        */
+					"@RRAB," );/*       первый  и        */
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /* второй операнды ассемб-*/
 				       FORMT [0]);/* леровской операции     */
 
@@ -1235,8 +1328,13 @@ int AVI2 ()
 						  /* семблера  и            */
 	    return 0;                             /* завершить программу    */
 	   }
-	  else
-	   return 3;                              /* если тип терма не bin  */
+	  else 
+	if ( SYM [i].TYPE == 'D' )              /* в случае типа=bin fixed*/
+	   {	    
+	    return 0;                             /* завершить программу    */
+	   } 
+	   printf("Olo");
+	   return 3;                              /* если тип терма не bin/dec  */
 						  /* fixed,то выход по ошиб-*/
 						  /* ке                     */
        }
@@ -1250,7 +1348,8 @@ int AVI2 ()
 						  /* двухтермовая, то:      */
    {
     for ( i = 0; i < ISYM; i++ )                  /* если правый терм ариф- */
-     {                                            /* метического выражения  */
+     {
+                                                  /* метического выражения  */
       if ( !strcmp ( SYM [i].NAME,                /*определен в табл.SYM,то:*/
 			    FORMT [IFORMT-1] )  &&
 	   strlen ( SYM [i].NAME ) ==
@@ -1259,7 +1358,7 @@ int AVI2 ()
        {
 	  if ( SYM [i].TYPE == 'B' )              /* если тип правого опе-  */
 	   {                                      /* ранда bin fixed, то:   */
-
+	    
 	    if ( STROKA [ DST [I2].DST4 -         /* если знак опер."+",то: */
 	     strlen( FORMT [IFORMT-1] ) ] == '+' )
 	     {
@@ -1288,17 +1387,49 @@ int AVI2 ()
 		 memcpy( ASS_CARD._BUFCARD.OPERAC,/* иначе - "S"            */
 					 "S", 1 );
 	       }
+		
+		else
+		{
+		 if ( STROKA [ DST [I2].DST4 -       /* если же знак операции  */
+		 	strlen ( FORMT [IFORMT-1] ) ] == /* арифметического выра-  */
+					     '=' )/* жения "-", то:         */
 
-	      else
-
-	       return 5;                          /* если знак операции не  */
+	         { 
+		  if ( strcmp ( SYM [i].RAZR, "15" )/* при разрядности ариф-  */
+					    <= 0 )/* метич.выраж.<= 15      */
+		    memcpy( ASS_CARD._BUFCARD.OPERAC,/* формируем код ассембле-*/
+					"LH", 2 );/* ровской операции "SH",F*/
+		  else
+		    memcpy( ASS_CARD._BUFCARD.OPERAC,/* иначе - "S"            */
+					 "L", 1 );
+	          strcpy ( ASS_CARD._BUFCARD.OPERAND,   /* - первый операнд ассем-*/
+					"@RTMP," );/*блеровской операции;    */
+		  strcat ( ASS_CARD._BUFCARD.OPERAND,   /* - второй операнд ассем-*/
+				       FORMT [IFORMT-1] );/*блеровской операции;    */
+		  ASS_CARD._BUFCARD.OPERAND [ strlen
+			  ( ASS_CARD._BUFCARD.OPERAND )] =/* - разделяющий пробел;  */
+						      ' ';
+		  memcpy ( ASS_CARD._BUFCARD.COMM,
+		   "Формирование промежуточного значения",/* - построчный коментарий*/
+						     36 );
+		  ZKARD ();
+		  add_compare(SYM[i].NAME, "@RRAB", "@RTMP");  
+		                               /* запоминание ассембле-  */
+							  /* ровской операции       */
+		  return 0;
+		 }
+		 else
+	       	  return 5; 
+		} 
+	     
+	     }
+	                                          /* если знак операции не  */
 						  /* "+" и не "-", то завер-*/
 						  /* шение  программы  по   */
-						  /* ошибке                 */
-	     }
+						  /* ошибке                 */ 
 						  /* формируем:             */
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /* - первый операнд ассем-*/
-					"RRAB," );/*блеровской операции;    */
+					"@RRAB," );/*блеровской операции;    */
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /* - второй операнд ассем-*/
 			       FORMT [IFORMT-1] );/*блеровской операции;    */
 	    ASS_CARD._BUFCARD.OPERAND [ strlen
@@ -1313,7 +1444,9 @@ int AVI2 ()
 	    return 0;                             /* успешное завершение    */
 						  /* пограммы               */
 	   }
-	  else
+
+              else
+
 	   return 3;                              /* если тип правого опе-  */
 						  /* ранда арифметического  */
 						  /* выражения не bin fixed,*/
@@ -1321,7 +1454,34 @@ int AVI2 ()
 						  /* мы по ошибке           */
        }
      }
-    return 4;                                     /* если правый операнд    */
+     if ( !strcmp ( "5",                
+			    FORMT [IFORMT-1] )  &&
+	   strlen ( "5" ) ==
+		       strlen ( FORMT [IFORMT-1]) )
+	{
+		int isDEC = 0;
+		for ( i = 0; i < ISYM; i++ )                  
+     		{
+			if (SYM[i].NAME[0] == FORMT[IFORMT-2][0] && SYM[i].TYPE == 'D')
+			{
+
+				isDEC = 1;
+			}
+		}
+		if (isDEC == 1)
+		{
+			add_mult_expression(FORMT [IFORMT-2], CR_5);
+			
+		     	add_logical_epression_bin_dec(FORMT [IFORMT-2], "@RRAB", DEC_MEM);   
+		     	return 0;
+		}
+		else
+		{
+			return 4;		
+		}
+        } else {
+    
+    return 4; }                                     /* если правый операнд    */
 						  /* арифметического выраже-*/
 						  /*ния не определен в табл.*/
 						  /* SYM, то завершить про- */
@@ -1510,10 +1670,31 @@ int OEN2 ()
 		 "Определение переменной", 22 );  /* тария                  */
 
 	ZKARD ();                                 /* запомнить операцию     */
-						  /*    Ассемблера          */
-       }
+       } 
+       else if (SYM [i].TYPE == 'D') 
+       {
+        printf ("DEC - %s", SYM [i].NAME);
+  strcpy ( ASS_CARD._BUFCARD.METKA, SYM [i].NAME );
+        ASS_CARD._BUFCARD.METKA [ strlen ( ASS_CARD._BUFCARD.METKA ) ] = ' '; 
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "DC", 2 );  
+  strcpy ( ASS_CARD._BUFCARD.OPERAND, "PL3\'");
+  strcat(ASS_CARD._BUFCARD.OPERAND, gcvt(VALUE(SYM[i].INIT), 10, &RAB[0]));
+        ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = '\'';
+  memcpy ( ASS_CARD._BUFCARD.COMM,          /* поле построчного комен-*/
+                 "Определение переменной", 22 );  /* тария                  */
+        ZKARD ();
+      }
      }
    }
+   
+  /* добавим TRUE и FALSE */
+
+  add_asm_command (CR_5, "DC", "PL3\'5\'");
+  add_asm_command (CR_TRUE, "DC", "H\'1\'");
+  add_asm_command (CR_FALSE, "DC", "H\'0\'");
+  add_asm_command ("", "DS", "0F");
+  add_asm_command (DEC_MEM, "DC", "PL8\'0\'");
+  
 						  /* далее идет блок декла- */
 						  /* ративных ассемблеровс- */
 						  /* ких EQU-операторов, оп-*/
@@ -1521,15 +1702,24 @@ int OEN2 ()
 						  /* рабочий регистры общего*/
 						  /* назначения             */
 
-  memcpy ( ASS_CARD._BUFCARD.METKA, "RBASE", 5 ); /* формирование EQU-псев- */
-  memcpy ( ASS_CARD._BUFCARD.OPERAC, "EQU",3 );   /* дооперации определения */
+
+
+  memcpy ( ASS_CARD._BUFCARD.METKA, "@RBASE", 6 ); /* формирование EQU-псев- */
+  memcpy ( ASS_CARD._BUFCARD.OPERAC, "EQU", 3 );   /* дооперации определения */
   memcpy ( ASS_CARD._BUFCARD.OPERAND, "15", 2 );  /* номера базового регист-*/
 						  /* ра общего назначения   */
 						  /*           и            */
   ZKARD ();                                       /* запоминание ее         */
 
-  memcpy ( ASS_CARD._BUFCARD.METKA, "RRAB", 4 );  /* формирование EQU-псев- */
-  memcpy ( ASS_CARD._BUFCARD.OPERAC, "EQU",3 );   /* дооперации определения */
+  memcpy ( ASS_CARD._BUFCARD.METKA, "@RTMP", 5 ); /* формирование EQU-псев- */
+  memcpy ( ASS_CARD._BUFCARD.OPERAC, "EQU", 3 );   /* дооперации определения */
+  memcpy ( ASS_CARD._BUFCARD.OPERAND, "6", 1 );  /* номера базового регист-*/
+						  /* ра общего назначения   */
+						  /*           и            */
+  ZKARD ();                                       /* запоминание ее         */
+
+  memcpy ( ASS_CARD._BUFCARD.METKA, "@RRAB", 5 );  /* формирование EQU-псев- */
+  memcpy ( ASS_CARD._BUFCARD.OPERAC, "EQU", 3 );   /* дооперации определения */
   memcpy ( ASS_CARD._BUFCARD.OPERAND, "5", 1 );   /* номера базового регист-*/
 						  /* ра общего назначения   */
 						  /*            и           */
@@ -1584,12 +1774,15 @@ int OPA2 ()
 	     memcpy ( ASS_CARD._BUFCARD.OPERAC,   /* сформировать команду   */
 				       "STH", 3 );/* записи полуслова       */
 
-	    else                                  /* иначе:                 */
-	     memcpy ( ASS_CARD._BUFCARD.OPERAC,   /* команду записи слова   */
+	    else             
+		{                    
+			memcpy ( ASS_CARD._BUFCARD.METKA,   CR_L0,     5); /* иначе:                 */
+	     		memcpy ( ASS_CARD._BUFCARD.OPERAC,   /* команду записи слова   */
 					"ST", 2 );
-
+			
+		}
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /*       доформировать    */
-					"RRAB," );/*          операнды      */
+					"@RRAB," );/*          операнды      */
 
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /*           команды      */
 				      FORMT [0]) ;
@@ -1605,10 +1798,10 @@ int OPA2 ()
 	    return 0;                             /* завершить программу    */
 	   }
 
-	  else                                    /* если идентификатор не  */
-						  /* имеет тип bin fixed,то:*/
-	   return 3;                              /* завершение с диагности-*/
-						  /* кой ошибки             */
+    else if (SYM [i].TYPE == 'D') {
+            return 0;
+          } 
+          else return 3; 
        }
    }
   return 4;                                       /* если идентификатор ра- */
@@ -1638,7 +1831,7 @@ int OPR2 ()
 						  /* ПЛ1 - "начало процедур-*/
 						  /* ного блока"            */
   while ( FORMT [0][i] != '\x0' )
-   ASS_CARD._BUFCARD.METKA [i] = FORMT [0][i++];  /* нулевой терм используем*/
+   ASS_CARD._BUFCARD.METKA [i++] = FORMT [0][i];  /* нулевой терм используем*/
 						  /* как метку в START-псев-*/
 						  /* дооперации Ассемблера  */
 
@@ -1651,14 +1844,14 @@ int OPR2 ()
 
   memcpy ( ASS_CARD._BUFCARD.OPERAC, "BALR", 4 ); /* формируем BALR-операцию*/
   memcpy ( ASS_CARD._BUFCARD.OPERAND,             /* Ассемблера             */
-				  "RBASE,0", 7 );
+				  "@RBASE,0", 8 );
   memcpy ( ASS_CARD._BUFCARD.COMM,
 		  "Загрузить регистр базы", 22 );
   ZKARD ();                                       /* и запоминаем ее        */
 
   memcpy ( ASS_CARD._BUFCARD.OPERAC, "USING", 5 );/* формируем USING-псевдо-*/
   memcpy ( ASS_CARD._BUFCARD.OPERAND,             /* операцию Ассемблера    */
-				   "*,RBASE", 7 );
+				   "*,@RBASE", 8 );
   memcpy ( ASS_CARD._BUFCARD.COMM,
 		  "Назначить регистр базой", 23 );
   ZKARD ();                                       /* и запоминаем ее        */
@@ -1792,6 +1985,68 @@ int gen_COD ()                                    /*интерпретации строк сте-*/
 						  /* программы              */
  }
 
+void add_asm_command (const char* label,
+		      const char* operation,
+                      const char* operands)
+{
+  memcpy ( ASS_CARD._BUFCARD.METKA,   label,     strlen(label)); 
+  memcpy ( ASS_CARD._BUFCARD.OPERAC,  operation, strlen(operation));  
+  memcpy ( ASS_CARD._BUFCARD.OPERAND, operands,  strlen(operands)); 
+						 
+  ZKARD ();                 
+}
+
+void add_mult_expression (
+                                     const char* ide_1, //dec
+				     const char* ide_2 //dec
+                                   )
+{
+    char operands [16];
+    // mult ide_2 and 5
+    sprintf (operands, "%s(3),%s(3)", ide_1, ide_2);
+    add_asm_command ("", "MP", operands);
+}
+
+void add_logical_epression_bin_dec (
+                                     const char* ide_2,  // dec
+                                     const char* reg_2,
+                                     const char* dec_mem
+                                   )
+// --> result in reg_1 
+{
+    char operands [16];
+    
+    // load ide 2 in memory
+    sprintf (operands, "%s+5(3),%s", dec_mem, ide_2);
+    add_asm_command ("", "MVC", operands);
+    // load ide 1 in register
+    sprintf (operands, "%s,%s", reg_2, dec_mem);
+    add_asm_command ("", "CVB", operands);
+}
+
+void add_compare (
+                                     const char* ide_1,  // bin
+                                     const char* reg_1,
+                                     const char* reg_2
+                                   )
+// --> result in reg_1 
+{
+    char operands [16];
+    
+    // compare
+    sprintf (operands, "%s,%s", reg_1, reg_2);
+    add_asm_command ("", "CR", operands);
+    // if true
+    add_asm_command ("", "BC", "8," CR_L1);       // ---
+    // if false - load false in operand                |
+    sprintf (operands, "%s,%s", reg_1, CR_FALSE); //   |    
+    add_asm_command ("", "LH", operands);         //   |
+    // go to res0                                      |
+    add_asm_command ("", "BC", "15," CR_L0);      // ->|
+    // if true                                         |
+    sprintf (operands, "%s,%s", reg_1, CR_TRUE);  //   |
+    add_asm_command (CR_L1, "LH", operands);      //<- |
+}
 /*..........................................................................*/
 
 						  /*  п р о г р а м м а,    */
