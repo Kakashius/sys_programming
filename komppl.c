@@ -1316,7 +1316,7 @@ int AVI2 ()
 						  /* ровской операции L     */
 
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /*       формируем        */
-					"RRAB," );/*       первый  и        */
+					"@RRAB," );/*       первый  и        */
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /* второй операнды ассемб-*/
 				       FORMT [0]);/* леровской операции     */
 
@@ -1330,9 +1330,27 @@ int AVI2 ()
 						  /* семблера  и            */
 	    return 0;                             /* завершить программу    */
 	   }
+    else if ( SYM [i].TYPE == 'D' )         /* в случае типа=dec fixed*/
+    {
+      memcpy ( ASS_CARD._BUFCARD.OPERAC, "MVC", 3 ); /* формируем код MVC */
+      strcpy ( ASS_CARD._BUFCARD.OPERAND, "@D+5(3)," );/* формируем первыый и */
+      strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [0]);/* и второй операнд асс. операции */
+      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = ' ';/* вствав. раздел-ль */
+      ZKARD (); /* запомнить операцию ассемблера */
+
+      memcpy ( ASS_CARD._BUFCARD.OPERAC, "CVB", 3 ); /* формируем код CVB */
+      strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );/* формируем первыый и */
+      strcat ( ASS_CARD._BUFCARD.OPERAND, "@D");/* и второй операнд асс. операции */
+      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = ' ';/* вствав. раздел-ль */
+      memcpy ( ASS_CARD._BUFCARD.COMM, "Convert to Binary", 17 ); /* и построчный коментарий*/
+      ZKARD (); /* запомнить операцию ассемблера */
+
+      return 0;                             /* завершить программу    */
+    }
 	  else
+    {
 	   return 3;                              /* если тип терма не bin  */
-						  /* fixed,то выход по ошиб-*/
+		}				  /* fixed и не dec fixed, то выход по ошиб-*/
 						  /* ке                     */
        }
      }
