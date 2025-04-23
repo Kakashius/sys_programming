@@ -1733,14 +1733,16 @@ int OEN2 ()
         ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = '\'';
         if (strcmp(SYM[i].INIT, "0") == 0)
         {
-          strcpy(ASS_CARD._BUFCARD.COMM, "Def. ");
-          strcat(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+          memcpy(ASS_CARD._BUFCARD.COMM, "Def. ", 5);
+	        memcpy(ASS_CARD._BUFCARD.COMM + 5, SYM[i].NAME, strlen(SYM[i].NAME));
         }
         else
         {
-          strcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
-          strcat(ASS_CARD._BUFCARD.COMM, "=");
-          strcat(ASS_CARD._BUFCARD.COMM, SYM[i].INIT);
+          size_t lenName = strlen(SYM[i].NAME);
+          memcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME, lenName);
+          ASS_CARD._BUFCARD.COMM[lenName] = '=';
+          size_t lenInit = strlen(SYM[i].INIT);
+          memcpy(ASS_CARD._BUFCARD.COMM + lenName + 1, SYM[i].INIT, lenInit);
         }
         ZKARD ();
        }
