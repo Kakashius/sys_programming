@@ -1429,7 +1429,7 @@ int AVI2 ()
     else if ( SYM [i].TYPE == 'D' )         /* если тип правого опе-  */
     {                                       /* ранда dec fixed, то:   */
       /* если знак операции "*", то */
-      if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '+' )
+      if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '*' )
       {
         memcpy( ASS_CARD._BUFCARD.OPERAC, "MH", 2 );  /* формируем код MH */
       }
