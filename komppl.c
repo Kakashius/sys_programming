@@ -1426,10 +1426,35 @@ int AVI2 ()
 	    return 0;                             /* успешное завершение    */
 						  /* пограммы               */
 	   }
+    else if ( SYM [i].TYPE == 'D' )         /* если тип правого опе-  */
+    {                                       /* ранда dec fixed, то:   */
+      /* если знак операции "*", то */
+      if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '+' )
+      {
+        memcpy( ASS_CARD._BUFCARD.OPERAC, "MH", 2 );  /* формируем код MH */
+      }
+      else
+      {
+	       return 5;                          /* если знак операции не  */
+			}			  /* "*", то завер-*/
+						  /* шение  программы  по   */
+						  /* ошибке                 */
+      strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );  /* - первый операнд ассем-*/
+                                                      /*блеровской операции;    */
+	    strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [IFORMT-1] ); /* - второй операнд ассем-*/
+			                                                        /*блеровской операции;    */
+	    ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+	    memcpy ( ASS_CARD._BUFCARD.COMM, "Binary multiply", 15 );/* - построчный коментарий*/
+	    ZKARD ();                             /* запоминание ассембле-  */
+						                                /* ровской операции       */
+	    return 0;                             /* успешное завершение    */
+						  /* пограммы */
+    }
 	  else
+    {
 	   return 3;                              /* если тип правого опе-  */
-						  /* ранда арифметического  */
-						  /* выражения не bin fixed,*/
+		}				  /* ранда арифметического  */
+						  /* выражения не bin fixed и не dec fixed,*/
 						  /* то завершение програм- */
 						  /* мы по ошибке           */
        }
