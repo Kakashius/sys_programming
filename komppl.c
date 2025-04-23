@@ -1291,15 +1291,14 @@ int ZNK1 ()
 int AVI2 ()
  {
 
-  if (skip_load && IFORMT == 1) {
-    skip_load = 0;
-    return 0;
-  }
-
   char i;
   FORM ();                                        /*форматируем правую часть*/
 						  /*арифметического ПЛ1-опе-*/
 						  /*ратора присваивания     */
+  if (skip_load && IFORMT == 1) {
+    skip_load = 0;
+    return 0;
+  }
 
   if ( IFORMT == 1 )                              /* если правая часть одно-*/
      {                                            /* термовая, то:          */
