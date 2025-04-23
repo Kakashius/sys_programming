@@ -1396,6 +1396,35 @@ int AVI2 ()
 	      return 0;                             /* успешное завершение    */
 						  /* пограммы */
       }
+      else if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '=' ) /* если знак опер."=",то: */
+      {
+        if ( strcmp ( SYM [i].RAZR, "15" ) <= 0 )   /* если разрядность <= 15    */
+	        memcpy ( ASS_CARD._BUFCARD.OPERAC, "LH", 2 );  /* формируем код ассемблеровской операции LH, */
+	      else
+	        memcpy ( ASS_CARD._BUFCARD.OPERAC, "L", 1 );  /* а при >15 формируем код ассемблеровской операции L */
+
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [IFORMT-1] ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+
+	      ZKARD ();                             /* запоминание ассемблеровской операции */
+
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "CH", 2 ); /* формируем код ассемблеровской операции CH */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [0] ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+        memcpy ( ASS_CARD._BUFCARD.COMM, "Compare", 7 ); /* и построчный коментарий*/
+        ZKARD (); /* запомнить операцию ассемблера */
+
+
+        //ZKARD ();                             /* запоминание ассемблеровской операции */
+	      return 0;                             /* успешное завершение    */
+						  /* пограммы */
+      }
 	    else
 
 	     {
