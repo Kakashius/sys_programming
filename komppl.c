@@ -1698,9 +1698,9 @@ int OEN2 ()
 //		 ltoa ( VALUE (SYM [i].INIT),     /* часть операнда псевдо- */
 //				 &RAB [0], 10) ); /* операции,              */
 //let's do that in Unix!
-  if ( SYM[i].INIT[ strlen(SYM[i].INIT) - 1 ] == "B" ) 
+  if ( SYM[i].INIT[ strlen(SYM[i].INIT) - 1 ] == 'B' ) 
   {
-	strcat(ASS_CARD._BUFCARD.OPERAND, gcvt(VALUE(SYM[i].INIT), 10, &RAB[0]));
+	  strcat(ASS_CARD._BUFCARD.OPERAND, gcvt(VALUE(SYM[i].INIT), 10, &RAB[0]));
   }
   else
   {
@@ -1710,14 +1710,16 @@ int OEN2 ()
 	 ( ASS_CARD._BUFCARD.OPERAND ) ] = '\'';  /*          и             */
    if (strcmp(SYM[i].INIT, "0") == 0)
    {
-     strcpy(ASS_CARD._BUFCARD.COMM, "Def. ");
-     strcat(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+    memcpy(ASS_CARD._BUFCARD.COMM, "Def. ", 5);
+	  memcpy(ASS_CARD._BUFCARD.COMM + 5, SYM[i].NAME, strlen(SYM[i].NAME));
    }
    else
    {
-     strcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
-     strcat(ASS_CARD._BUFCARD.COMM, "=");
-     strcat(ASS_CARD._BUFCARD.COMM, SYM[i].INIT);
+    size_t lenName = strlen(SYM[i].NAME);
+	  memcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME, lenName);
+	  ASS_CARD._BUFCARD.COMM[lenName] = '=';
+	  size_t lenInit = strlen(SYM[i].INIT);
+	  memcpy(ASS_CARD._BUFCARD.COMM + lenName + 1, SYM[i].INIT, lenInit);
    }
 	ZKARD ();                                 /* запомнить операцию     */
        }      /*    Ассемблера          */
