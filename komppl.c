@@ -1837,6 +1837,23 @@ int OPA2 ()
 	  if ( SYM [i].TYPE == 'B' )              /* если этот идентификатор*/
 	   {                                      /* имеет тип bin fixed,то:*/
 
+
+      if ( strcmp(FORMT[2], FORMT[0]) == 0 || strcmp(FORMT[1], FORMT[0]) == 0 )
+      {
+        memcpy( ASS_CARD._BUFCARD.METKA, "@ON_F", 5 );
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "ST", 2 );  /* сформировать команду записи слова*/
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RRAB," );  /*       доформировать операнды  */
+	      strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [0]) ;  /*           команды      */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = ' ';
+        memcpy ( ASS_CARD._BUFCARD.COMM,      /* построчный коментарий  */
+          "Put res. in ", 12 );
+        memcpy(ASS_CARD._BUFCARD.COMM + 12, SYM[i].NAME, strlen(SYM[i].NAME));
+        ZKARD ();                             /* запомнить операцию     */
+                  /* Ассемблера  и          */
+        return 0;                             /* завершить программу    */
+
+      }
+
 	    if ( strcmp ( SYM [i].RAZR, "15" )    /* если bin fixed (15),то:*/
 					    <= 0 )
 	     memcpy ( ASS_CARD._BUFCARD.OPERAC,   /* сформировать команду   */
