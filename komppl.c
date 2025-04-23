@@ -1847,7 +1847,7 @@ int OPA2 ()
 					"ST", 2 );
 
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /*       доформировать    */
-					"RRAB," );/*          операнды      */
+					"@RTMP," );/*          операнды      */
 
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /*           команды      */
 				      FORMT [0]) ;
@@ -1856,8 +1856,8 @@ int OPA2 ()
 	    ( ASS_CARD._BUFCARD.OPERAND ) ] = ' ';
 
 	    memcpy ( ASS_CARD._BUFCARD.COMM,      /* построчный коментарий  */
-	    "Формирование значения арифм.выражения",
-					     37 );
+	    "Set value",
+					     9 );
 	    ZKARD ();                             /* запомнить операцию     */
 						  /* Ассемблера  и          */
 	    return 0;                             /* завершить программу    */
