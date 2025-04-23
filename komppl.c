@@ -1920,22 +1920,22 @@ int OPR2 ()
   memcpy ( ASS_CARD._BUFCARD.OPERAC, "START", 5 );/* достраиваем код и опе- */
   memcpy ( ASS_CARD._BUFCARD.OPERAND, "0", 1 );   /* ранды  в  START-псевдо-*/
   memcpy ( ASS_CARD._BUFCARD.COMM,                /* операции Ассемблера    */
-		      "Начало программы", 16 );
+		      "Start program", 13 );
   ZKARD ();                                       /* запоминаем карту Ассем-*/
 						  /* блера                  */
 
   memcpy ( ASS_CARD._BUFCARD.OPERAC, "BALR", 4 ); /* формируем BALR-операцию*/
   memcpy ( ASS_CARD._BUFCARD.OPERAND,             /* Ассемблера             */
-				  "RBASE,0", 7 );
+				  "@RBASE,0", 8 );
   memcpy ( ASS_CARD._BUFCARD.COMM,
-		  "Загрузить регистр базы", 22 );
+		  "Load register base", 18 );
   ZKARD ();                                       /* и запоминаем ее        */
 
   memcpy ( ASS_CARD._BUFCARD.OPERAC, "USING", 5 );/* формируем USING-псевдо-*/
   memcpy ( ASS_CARD._BUFCARD.OPERAND,             /* операцию Ассемблера    */
-				   "*,RBASE", 7 );
+				   "*,@RBASE", 8 );
   memcpy ( ASS_CARD._BUFCARD.COMM,
-		  "Назначить регистр базой", 23 );
+		  "Set register base", 17 );
   ZKARD ();                                       /* и запоминаем ее        */
 
   return 0;                                       /* завершить подпрограмму */
