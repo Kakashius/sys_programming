@@ -1748,6 +1748,23 @@ int OEN2 ()
        }
      }
    }
+
+   /* Добавление true false */
+   memcpy ( ASS_CARD._BUFCARD.METKA, "@T", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAC, "DC", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAND, "H\'1\'", 4 );
+   memcpy(ASS_CARD._BUFCARD.COMM, "True", 4);
+   ZKARD ();
+   memcpy ( ASS_CARD._BUFCARD.METKA, "@F", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAC, "DC", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAND, "H\'0\'", 4 );
+   memcpy(ASS_CARD._BUFCARD.COMM, "False", 5);
+   ZKARD ();
+   memcpy ( ASS_CARD._BUFCARD.METKA, "@D", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAC, "DC", 2 );
+   memcpy ( ASS_CARD._BUFCARD.OPERAND, "PL8\'0\'", 6 );
+   ZKARD ();
+
 						  /* далее идет блок декла- */
 						  /* ративных ассемблеровс- */
 						  /* ких EQU-операторов, оп-*/
