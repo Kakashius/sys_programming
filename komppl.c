@@ -1316,21 +1316,18 @@ int AVI2 ()
 						  /* ровской операции L     */
 
 	    strcpy ( ASS_CARD._BUFCARD.OPERAND,   /*       формируем        */
-					"@RRAB," );/*       первый  и        */
+					"@RTMP," );/*       первый  и        */
 	    strcat ( ASS_CARD._BUFCARD.OPERAND,   /* второй операнды ассемб-*/
 				       FORMT [0]);/* леровской операции     */
 
 	    ASS_CARD._BUFCARD.OPERAND [ strlen    /* вставляем разделитель  */
 	     ( ASS_CARD._BUFCARD.OPERAND ) ] = ' ';
 
-	    memcpy ( ASS_CARD._BUFCARD.COMM,      /* и построчный коментарий*/
-	     "Загрузка переменной в регистр", 29 );
-
 	    ZKARD ();                             /* запомнить операцию ас- */
 						  /* семблера  и            */
 	    return 0;                             /* завершить программу    */
 	   }
-    else if ( SYM [i].TYPE == 'D' )         /* в случае типа=dec fixed*/
+    else if ( SYM [i].TYPE == 'D' )         /* в случае типа=dec fixed переводим в BIN*/
     {
       memcpy ( ASS_CARD._BUFCARD.OPERAC, "MVC", 3 ); /* формируем код MVC */
       strcpy ( ASS_CARD._BUFCARD.OPERAND, "@D+5(3)," );/* формируем первыый и */
@@ -1384,7 +1381,21 @@ int AVI2 ()
 	       memcpy ( ASS_CARD._BUFCARD.OPERAC,
 					 "A", 1 );/* иначе - "A"            */
 	     }
-
+      
+      else if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '*' ) /* если знак опер."*",то: */
+      {
+        memcpy( ASS_CARD._BUFCARD.OPERAC, "MH", 2 );      /* формируем код MH */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [IFORMT-1] ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+	      memcpy ( ASS_CARD._BUFCARD.COMM, "Binary multiply", 15 ); /* - построчный коментарий*/
+	      ZKARD ();                             /* запоминание ассембле-  */
+						                                /* ровской операции       */
+	      return 0;                             /* успешное завершение    */
+						  /* пограммы */
+      }
 	    else
 
 	     {
@@ -1405,7 +1416,7 @@ int AVI2 ()
 	      else
 
 	       return 5;                          /* если знак операции не  */
-						  /* "+" и не "-", то завер-*/
+						  /* "+", не "*" и не "-", то завер-*/
 						  /* шение  программы  по   */
 						  /* ошибке                 */
 	     }
@@ -1426,35 +1437,11 @@ int AVI2 ()
 	    return 0;                             /* успешное завершение    */
 						  /* пограммы               */
 	   }
-    else if ( SYM [i].TYPE == 'D' )         /* если тип правого опе-  */
-    {                                       /* ранда dec fixed, то:   */
-      /* если знак операции "*", то */
-      if ( STROKA [ DST [I2].DST4 - strlen( FORMT [IFORMT-1] ) ] == '*' )
-      {
-        memcpy( ASS_CARD._BUFCARD.OPERAC, "MH", 2 );  /* формируем код MH */
-      }
-      else
-      {
-	       return 5;                          /* если знак операции не  */
-			}			  /* "*", то завер-*/
-						  /* шение  программы  по   */
-						  /* ошибке                 */
-      strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RTMP," );  /* - первый операнд ассем-*/
-                                                      /*блеровской операции;    */
-	    strcat ( ASS_CARD._BUFCARD.OPERAND, FORMT [IFORMT-1] ); /* - второй операнд ассем-*/
-			                                                        /*блеровской операции;    */
-	    ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
-	    memcpy ( ASS_CARD._BUFCARD.COMM, "Binary multiply", 15 );/* - построчный коментарий*/
-	    ZKARD ();                             /* запоминание ассембле-  */
-						                                /* ровской операции       */
-	    return 0;                             /* успешное завершение    */
-						  /* пограммы */
-    }
 	  else
     {
 	   return 3;                              /* если тип правого опе-  */
 		}				  /* ранда арифметического  */
-						  /* выражения не bin fixed и не dec fixed,*/
+						  /* выражения не bin fixed,*/
 						  /* то завершение програм- */
 						  /* мы по ошибке           */
        }
