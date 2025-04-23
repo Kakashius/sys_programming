@@ -1698,15 +1698,49 @@ int OEN2 ()
 //		 ltoa ( VALUE (SYM [i].INIT),     /* часть операнда псевдо- */
 //				 &RAB [0], 10) ); /* операции,              */
 //let's do that in Unix!
+  if ( SYM[i].INIT[ strlen(SYM[i].INIT) - 1 ] == "B" ) 
+  {
 	strcat(ASS_CARD._BUFCARD.OPERAND, gcvt(VALUE(SYM[i].INIT), 10, &RAB[0]));
+  }
+  else
+  {
+    strcat(ASS_CARD._BUFCARD.OPERAND, SYM[i].INIT);
+  }
 	ASS_CARD._BUFCARD.OPERAND [ strlen        /* замыкающий апостроф    */
 	 ( ASS_CARD._BUFCARD.OPERAND ) ] = '\'';  /*          и             */
-
-	memcpy ( ASS_CARD._BUFCARD.COMM,          /* поле построчного комен-*/
-		 "Определение переменной", 22 );  /* тария                  */
-
+   if (strcmp(SYM[i].INIT, "0") == 0)
+   {
+     strcpy(ASS_CARD._BUFCARD.COMM, "Def. ");
+     strcat(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+   }
+   else
+   {
+     strcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+     strcat(ASS_CARD._BUFCARD.COMM, "=");
+     strcat(ASS_CARD._BUFCARD.COMM, SYM[i].INIT);
+   }
 	ZKARD ();                                 /* запомнить операцию     */
-						  /*    Ассемблера          */
+       }      /*    Ассемблера          */
+       else if (SYM [i].TYPE == 'D')
+       {
+        strcpy ( ASS_CARD._BUFCARD.METKA, SYM [i].NAME );
+        ASS_CARD._BUFCARD.METKA [ strlen ( ASS_CARD._BUFCARD.METKA ) ] = ' ';
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "DC", 2 );
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "PL3\'");
+        strcat(ASS_CARD._BUFCARD.OPERAND, SYM[i].INIT);
+        ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND ) ] = '\'';
+        if (strcmp(SYM[i].INIT, "0") == 0)
+        {
+          strcpy(ASS_CARD._BUFCARD.COMM, "Def. ");
+          strcat(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+        }
+        else
+        {
+          strcpy(ASS_CARD._BUFCARD.COMM, SYM[i].NAME);
+          strcat(ASS_CARD._BUFCARD.COMM, "=");
+          strcat(ASS_CARD._BUFCARD.COMM, SYM[i].INIT);
+        }
+        ZKARD ();
        }
      }
    }
