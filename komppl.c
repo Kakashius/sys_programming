@@ -1420,8 +1420,43 @@ int AVI2 ()
         memcpy ( ASS_CARD._BUFCARD.COMM, "Compare", 7 ); /* и построчный коментарий*/
         ZKARD (); /* запомнить операцию ассемблера */
 
+        /* Если условие - true*/
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "BC", 2 ); /* формируем код ассемблеровской операции BC */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "8," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, "@ON_T" ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+        memcpy ( ASS_CARD._BUFCARD.COMM, "True cond.", 10 ); /* и построчный коментарий*/
+        ZKARD (); /* запомнить операцию ассемблера */
 
-        //ZKARD ();                             /* запоминание ассемблеровской операции */
+        /* Если условие - false */
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "LH", 2 ); /* формируем код ассемблеровской операции LH */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RRAB," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, "@F" ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+        ZKARD (); /* запомнить операцию ассемблера */
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "BC", 2 ); /* формируем код ассемблеровской операции BC */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "15," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, "@ON_F" ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+        memcpy ( ASS_CARD._BUFCARD.COMM, "False cond.", 11 ); /* и построчный коментарий*/
+        ZKARD (); /* запомнить операцию ассемблера */
+
+        /* on true */
+        memcpy ( ASS_CARD._BUFCARD.METKA, "@ON_T", 5 ); /* формируем код ассемблеровской операции LH */
+        memcpy ( ASS_CARD._BUFCARD.OPERAC, "LH", 2 ); /* формируем код ассемблеровской операции LH */
+        strcpy ( ASS_CARD._BUFCARD.OPERAND, "@RRAB," );   /* - первый операнд ассем-*/
+                                                          /*блеровской операции;    */
+        strcat ( ASS_CARD._BUFCARD.OPERAND, "@T" ); /* - второй операнд ассем-*/
+			                                                          /*блеровской операции;    */
+	      ASS_CARD._BUFCARD.OPERAND [ strlen ( ASS_CARD._BUFCARD.OPERAND )] = ' '; /* - разделяющий пробел;  */
+        ZKARD ();                             /* запоминание ассемблеровской операции */
+        
 	      return 0;                             /* успешное завершение    */
 						  /* пограммы */
       }
